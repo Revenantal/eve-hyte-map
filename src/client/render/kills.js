@@ -3,7 +3,7 @@ const iskFormatter = new Intl.NumberFormat('en-US', {
   maximumFractionDigits: 1
 });
 
-export function renderKillsList(container, recentKills) {
+export function renderKillsList(container, recentKills, { activeKillId = null } = {}) {
   container.innerHTML = '';
 
   if (!recentKills.length) {
@@ -14,9 +14,17 @@ export function renderKillsList(container, recentKills) {
     return;
   }
 
-  for (const killEvent of recentKills) {
+  for (const [index, killEvent] of recentKills.entries()) {
     const item = document.createElement('li');
     item.className = 'kill-row';
+    if (killEvent.killId === activeKillId) {
+      item.classList.add('is-active-focus');
+      item.setAttribute('aria-current', 'true');
+    }
+    item.dataset.killIndex = String(index);
+    item.tabIndex = 0;
+    item.setAttribute('role', 'button');
+    item.setAttribute('aria-label', `Focus map on ${formatLocationLabel(killEvent)}`);
 
     item.append(
       createValueRail(killEvent),

@@ -29,7 +29,12 @@ test('loadConfig applies env overrides over file config', async () => {
         widthPx: 1000,
         maxRecentKills: 3,
         activityWindowMs: 3600000,
-        pulseDurationMs: 1500
+        pulseDurationMs: 1500,
+        cameraZoomScale: 1.5,
+        cameraMoveDurationMs: 5000,
+        cameraLockMs: 30000,
+        cameraResetIdleMs: 60000,
+        cameraSelectionDebounceMs: 3000
       },
       map: {
         systemsPath: './data/systems.json',
@@ -76,7 +81,12 @@ test('loadConfig rejects an empty user agent', async () => {
         widthPx: 1000,
         maxRecentKills: 3,
         activityWindowMs: 3600000,
-        pulseDurationMs: 1500
+        pulseDurationMs: 1500,
+        cameraZoomScale: 1.5,
+        cameraMoveDurationMs: 5000,
+        cameraLockMs: 30000,
+        cameraResetIdleMs: 60000,
+        cameraSelectionDebounceMs: 3000
       },
       map: {
         systemsPath: './data/systems.json',
@@ -116,7 +126,12 @@ test('loadConfig clamps R2Z2 timings to documented safe minimums', async () => {
         widthPx: 1000,
         maxRecentKills: 3,
         activityWindowMs: 3600000,
-        pulseDurationMs: 1500
+        pulseDurationMs: 1500,
+        cameraZoomScale: 1.5,
+        cameraMoveDurationMs: 5000,
+        cameraLockMs: 30000,
+        cameraResetIdleMs: 60000,
+        cameraSelectionDebounceMs: 3000
       },
       map: {
         systemsPath: './data/systems.json',

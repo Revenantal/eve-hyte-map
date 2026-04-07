@@ -13,6 +13,31 @@
   <body>
     <main class="display-shell">
       <section class="map-panel">
+        <button
+          type="button"
+          class="camera-toggle"
+          id="camera-toggle"
+          aria-pressed="true"
+          aria-label="Disable map motion"
+          title="Disable map motion"
+        >
+          <svg class="camera-toggle-icon" viewBox="0 0 48 48" aria-hidden="true">
+            <g class="camera-toggle-on">
+              <path d="M24 14v20" />
+              <path d="M14 24h20" />
+              <path d="M24 7l-3.5 3.5" />
+              <path d="M24 7l3.5 3.5" />
+              <path d="M41 24l-3.5-3.5" />
+              <path d="M41 24l-3.5 3.5" />
+              <path d="M24 41l-3.5-3.5" />
+              <path d="M24 41l3.5-3.5" />
+              <path d="M7 24l3.5-3.5" />
+              <path d="M7 24l3.5 3.5" />
+              <circle cx="24" cy="24" r="6" />
+            </g>
+            <path class="camera-toggle-off" d="M12 36L36 12" />
+          </svg>
+        </button>
         <div class="status-overlay" id="status-overlay" aria-live="polite">
           <div class="status-line" id="connection-label">[Connecting]</div>
           <div class="status-line" id="kill-count-label">0 kills past hour</div>

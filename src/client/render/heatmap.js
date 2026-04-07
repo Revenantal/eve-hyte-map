@@ -1,4 +1,4 @@
-export function drawHeatmap(context, systemsById, activityBySystem, tiers) {
+export function drawHeatmap(context, systemsById, activityBySystem, tiers, visualScale = 1) {
   const orderedTiers = [...tiers].sort((left, right) => left.min - right.min);
 
   for (const [systemId, timestamps] of Object.entries(activityBySystem)) {
@@ -8,7 +8,7 @@ export function drawHeatmap(context, systemsById, activityBySystem, tiers) {
     }
 
     const tier = findTier(orderedTiers, timestamps.length);
-    const radius = tier.radius * 6;
+    const radius = tier.radius * 6 * visualScale;
     const gradient = context.createRadialGradient(
       system.canvasX,
       system.canvasY,
@@ -28,20 +28,21 @@ export function drawHeatmap(context, systemsById, activityBySystem, tiers) {
   }
 }
 
-export function drawActiveSystemDots(context, systemsById, activityBySystem) {
+export function drawActiveSystemDots(context, systemsById, activityBySystem, visualScale = 1) {
   for (const [systemId, timestamps] of Object.entries(activityBySystem)) {
     const system = systemsById.get(Number(systemId));
     if (!system || !timestamps.length) {
       continue;
     }
 
+    const glowRadius = 10 * visualScale;
     const glow = context.createRadialGradient(
       system.canvasX,
       system.canvasY,
       0,
       system.canvasX,
       system.canvasY,
-      10
+      glowRadius
     );
     glow.addColorStop(0, 'rgba(128, 18, 18, 0.24)');
     glow.addColorStop(0.45, 'rgba(128, 18, 18, 0.1)');
@@ -49,11 +50,13 @@ export function drawActiveSystemDots(context, systemsById, activityBySystem) {
 
     context.fillStyle = glow;
     context.beginPath();
-    context.arc(system.canvasX, system.canvasY, 10, 0, Math.PI * 2);
+    context.arc(system.canvasX, system.canvasY, glowRadius, 0, Math.PI * 2);
     context.fill();
 
     context.fillStyle = 'rgba(255, 92, 92, 0.95)';
-    context.fillRect(system.canvasX - 2, system.canvasY - 2, 4, 4);
+    const dotSize = Math.max(4, Math.round(4 * visualScale));
+    const dotOffset = Math.floor(dotSize / 2);
+    context.fillRect(system.canvasX - dotOffset, system.canvasY - dotOffset, dotSize, dotSize);
   }
 }
 

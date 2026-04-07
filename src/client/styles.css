@@ -1,6 +1,4 @@
 :root {
-  color-scheme: dark;
-  --bg: #061018;
   --panel-border: rgba(131, 198, 255, 0.16);
   --text: #f4f6f8;
   --muted: #9aaebb;
@@ -51,7 +49,7 @@ html,
 body {
   margin: 0;
   min-height: 100%;
-  background: #000000;
+  background: rgba(0, 0, 0, 0.6);
   color: var(--text);
   font-family: "Eve Sans Neue", "Eve Sans", Bahnschrift, "Aptos", "Segoe UI Variable", "Segoe UI", sans-serif;
 }
@@ -61,8 +59,8 @@ body {
 }
 
 .display-shell {
-  width: min(100vw, var(--display-width, 1000px));
-  min-height: 100vh;
+  width: min(100vw, var(--display-width, 900px));
+  aspect-ratio: var(--display-aspect-ratio, 1 / 2);
   display: grid;
   grid-template-rows: 1.55fr 0.72fr;
   gap: 0;
@@ -96,6 +94,55 @@ body {
   letter-spacing: 0.04em;
   color: #ffffff;
   font-family: "Eve Sans Neue Condensed", "Eve Sans Neue", Bahnschrift, sans-serif;
+}
+
+.camera-toggle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #ffffff;
+  cursor: pointer;
+  transition: opacity 180ms ease;
+  padding:30px;
+}
+
+.camera-toggle:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.78);
+  outline-offset: 2px;
+}
+
+.camera-toggle:hover {
+  opacity: 0.82;
+}
+
+.camera-toggle.is-disabled {
+  color: #ffffff;
+}
+
+.camera-toggle-icon {
+  width: 66px;
+  height: 66px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.camera-toggle-off {
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.camera-toggle.is-disabled .camera-toggle-off {
+  opacity: 1;
 }
 
 .status-line {
@@ -132,6 +179,17 @@ body {
   border-radius: 0;
   border: 0;
   background: transparent;
+  cursor: pointer;
+  transition: background-color 180ms ease;
+}
+
+.kill-row.is-active-focus {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.kill-row:focus-visible {
+  outline: 2px solid rgba(114, 221, 255, 0.75);
+  outline-offset: -2px;
 }
 
 .kill-rail {
@@ -230,7 +288,6 @@ body {
 @media (max-width: 900px) {
   .display-shell {
     width: 100%;
-    min-height: 100vh;
   }
 
   .kill-row {

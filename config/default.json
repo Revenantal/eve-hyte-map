@@ -15,11 +15,16 @@
     "startMode": "resume_or_latest"
   },
   "display": {
-    "aspectRatio": "1:2",
-    "widthPx": 1000,
+    "aspectRatio": "1:1.97",
+    "widthPx": 1070,
     "maxRecentKills": 8,
     "activityWindowMs": 3600000,
-    "pulseDurationMs": 1500
+    "pulseDurationMs": 1500,
+    "cameraZoomScale": 5,
+    "cameraMoveDurationMs": 5000,
+    "cameraLockMs": 30000,
+    "cameraResetIdleMs": 60000,
+    "cameraSelectionDebounceMs": 3000
   },
   "map": {
     "systemsPath": "./data/systems.json",

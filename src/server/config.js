@@ -19,7 +19,12 @@ const ENV_NUMBER_OVERRIDES = {
   DISPLAY_WIDTH_PX: ['display', 'widthPx'],
   DISPLAY_MAX_RECENT_KILLS: ['display', 'maxRecentKills'],
   DISPLAY_ACTIVITY_WINDOW_MS: ['display', 'activityWindowMs'],
-  DISPLAY_PULSE_DURATION_MS: ['display', 'pulseDurationMs']
+  DISPLAY_PULSE_DURATION_MS: ['display', 'pulseDurationMs'],
+  DISPLAY_CAMERA_ZOOM_SCALE: ['display', 'cameraZoomScale'],
+  DISPLAY_CAMERA_MOVE_DURATION_MS: ['display', 'cameraMoveDurationMs'],
+  DISPLAY_CAMERA_LOCK_MS: ['display', 'cameraLockMs'],
+  DISPLAY_CAMERA_RESET_IDLE_MS: ['display', 'cameraResetIdleMs'],
+  DISPLAY_CAMERA_SELECTION_DEBOUNCE_MS: ['display', 'cameraSelectionDebounceMs']
 };
 
 const ENV_STRING_OVERRIDES = {
@@ -88,6 +93,11 @@ export async function loadConfig(projectRoot = process.cwd(), env = process.env)
   config.display.maxRecentKills = Number(config.display.maxRecentKills);
   config.display.activityWindowMs = Number(config.display.activityWindowMs);
   config.display.pulseDurationMs = Number(config.display.pulseDurationMs);
+  config.display.cameraZoomScale = Number(config.display.cameraZoomScale);
+  config.display.cameraMoveDurationMs = Number(config.display.cameraMoveDurationMs);
+  config.display.cameraLockMs = Number(config.display.cameraLockMs);
+  config.display.cameraResetIdleMs = Number(config.display.cameraResetIdleMs);
+  config.display.cameraSelectionDebounceMs = Number(config.display.cameraSelectionDebounceMs);
   config.r2z2.requestDelayMs = Number(config.r2z2.requestDelayMs);
   config.r2z2.emptyDelayMs = Number(config.r2z2.emptyDelayMs);
   config.r2z2.retryMs = Number(config.r2z2.retryMs);
