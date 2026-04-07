@@ -57,3 +57,38 @@ test('universe name resolver enriches unknown systems and ship type ids', async 
   assert.equal(fetchCalls[0].url, 'https://esi.evetech.net/latest/universe/names/');
   assert.equal(fetchCalls[0].body, JSON.stringify([31000005, 2112345678, 98633005, 99011193, 670]));
 });
+
+test('universe name resolver fails open when ESI lookup throws', async () => {
+  const warnings = [];
+  const resolver = createUniverseNameResolver({
+    userAgent: 'eve-killmap-test/1.0',
+    fetchImpl: async () => {
+      throw new Error('socket hang up');
+    },
+    logger: {
+      warn(message) {
+        warnings.push(message);
+      }
+    }
+  });
+
+  const baseKill = {
+    systemId: 31000005,
+    systemName: undefined,
+    victimCharacterId: 2112345678,
+    victimName: '2112345678',
+    shipTypeId: 670,
+    shipName: '670'
+  };
+
+  const enriched = await resolver.enrichKillEvent(baseKill);
+
+  assert.equal(enriched.systemId, baseKill.systemId);
+  assert.equal(enriched.systemName, undefined);
+  assert.equal(enriched.victimCharacterId, baseKill.victimCharacterId);
+  assert.equal(enriched.victimName, baseKill.victimName);
+  assert.equal(enriched.shipTypeId, baseKill.shipTypeId);
+  assert.equal(enriched.shipName, baseKill.shipName);
+  assert.equal(warnings.length, 1);
+  assert.match(warnings[0], /socket hang up/);
+});

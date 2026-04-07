@@ -1,7 +1,7 @@
 import express from 'express';
 import path from 'node:path';
 
-export function createApp({ config, mapData, state, sseHub }) {
+export function createApp({ config, mapData, state, sseHub, ingestor = null }) {
   const app = express();
   const clientRoot = path.resolve(process.cwd(), 'src', 'client');
 
@@ -49,10 +49,12 @@ export function createApp({ config, mapData, state, sseHub }) {
   });
 
   app.get('/health', (_request, response) => {
+    const ingestStatus = ingestor?.getStatus?.() ?? null;
     response.json({
       ok: true,
       currentSequence: state.getCurrentSequence(),
-      sseClients: sseHub.getClientCount()
+      sseClients: sseHub.getClientCount(),
+      ingest: ingestStatus
     });
   });
 

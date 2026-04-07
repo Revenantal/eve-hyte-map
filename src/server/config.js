@@ -9,6 +9,8 @@ const OPTIONAL_CONFIG_PATHS = [
 
 const MIN_R2Z2_REQUEST_DELAY_MS = 50;
 const MIN_R2Z2_EMPTY_DELAY_MS = 6000;
+const DEFAULT_MAX_CONSECUTIVE_MISSING_BEFORE_SKIP = 5;
+const DEFAULT_MAX_CONSECUTIVE_RETRY_BEFORE_SKIP = 5;
 
 const ENV_NUMBER_OVERRIDES = {
   PORT: ['server', 'port'],
@@ -16,6 +18,8 @@ const ENV_NUMBER_OVERRIDES = {
   R2Z2_EMPTY_DELAY_MS: ['r2z2', 'emptyDelayMs'],
   R2Z2_RETRY_MS: ['r2z2', 'retryMs'],
   R2Z2_TIMEOUT_MS: ['r2z2', 'timeoutMs'],
+  R2Z2_MAX_CONSECUTIVE_MISSING_BEFORE_SKIP: ['r2z2', 'maxConsecutiveMissingBeforeSkip'],
+  R2Z2_MAX_CONSECUTIVE_RETRY_BEFORE_SKIP: ['r2z2', 'maxConsecutiveRetryBeforeSkip'],
   DISPLAY_WIDTH_PX: ['display', 'widthPx'],
   DISPLAY_MAX_RECENT_KILLS: ['display', 'maxRecentKills'],
   DISPLAY_ACTIVITY_WINDOW_MS: ['display', 'activityWindowMs'],
@@ -102,6 +106,14 @@ export async function loadConfig(projectRoot = process.cwd(), env = process.env)
   config.r2z2.emptyDelayMs = Number(config.r2z2.emptyDelayMs);
   config.r2z2.retryMs = Number(config.r2z2.retryMs);
   config.r2z2.timeoutMs = Number(config.r2z2.timeoutMs);
+  config.r2z2.maxConsecutiveMissingBeforeSkip = normalizePositiveInteger(
+    config.r2z2.maxConsecutiveMissingBeforeSkip,
+    DEFAULT_MAX_CONSECUTIVE_MISSING_BEFORE_SKIP
+  );
+  config.r2z2.maxConsecutiveRetryBeforeSkip = normalizePositiveInteger(
+    config.r2z2.maxConsecutiveRetryBeforeSkip,
+    DEFAULT_MAX_CONSECUTIVE_RETRY_BEFORE_SKIP
+  );
 
   config.r2z2.requestDelayMs = Math.max(
     MIN_R2Z2_REQUEST_DELAY_MS,
@@ -128,6 +140,7 @@ export async function loadConfig(projectRoot = process.cwd(), env = process.env)
 
   return config;
 }
+
 function assignNested(target, pathParts, value) {
   let cursor = target;
   for (let index = 0; index < pathParts.length - 1; index += 1) {
@@ -137,4 +150,13 @@ function assignNested(target, pathParts, value) {
   }
 
   cursor[pathParts[pathParts.length - 1]] = value;
+}
+
+function normalizePositiveInteger(value, fallback) {
+  const numericValue = Number(value);
+  if (!Number.isInteger(numericValue) || numericValue < 1) {
+    return fallback;
+  }
+
+  return numericValue;
 }

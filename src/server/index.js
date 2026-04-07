@@ -11,7 +11,7 @@ async function main() {
   const state = createRuntimeState(config);
   const sseHub = createSseHub();
   const ingestor = createR2Z2Ingestor({ config, state, sseHub, mapData });
-  const app = createApp({ config, mapData, state, sseHub });
+  const app = createApp({ config, mapData, state, sseHub, ingestor });
 
   const server = app.listen(config.server.port, () => {
     console.log(`eve-hyte-map listening on http://localhost:${config.server.port}`);

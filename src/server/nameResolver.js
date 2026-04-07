@@ -130,43 +130,50 @@ export function createUniverseNameResolver({
   }
 
   async function fetchNames(lookups) {
-    const response = await fetchImpl(namesUrl, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'User-Agent': userAgent,
-        ...headers
-      },
-      body: JSON.stringify(lookups.map((lookup) => lookup.id)),
-      signal: AbortSignal.timeout(timeoutMs)
-    });
+    try {
+      const response = await fetchImpl(namesUrl, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'User-Agent': userAgent,
+          ...headers
+        },
+        body: JSON.stringify(lookups.map((lookup) => lookup.id)),
+        signal: AbortSignal.timeout(timeoutMs)
+      });
 
-    if (!response.ok) {
+      if (!response.ok) {
+        logger.warn(
+          `ESI name lookup failed with status ${response.status} for ids ${lookups.map((lookup) => lookup.id).join(', ')}.`
+        );
+        return new Map();
+      }
+
+      const payload = await response.json();
+      const results = new Map();
+
+      for (const item of payload) {
+        const matchingLookup = lookups.find(
+          (lookup) =>
+            lookup.id === item.id &&
+            CATEGORY_BY_KIND[lookup.kind] === item.category
+        );
+
+        if (!matchingLookup || !item.name) {
+          continue;
+        }
+
+        results.set(cacheKey(matchingLookup.kind, matchingLookup.id), item.name);
+      }
+
+      return results;
+    } catch (error) {
       logger.warn(
-        `ESI name lookup failed with status ${response.status} for ids ${lookups.map((lookup) => lookup.id).join(', ')}.`
+        `ESI name lookup failed for ids ${lookups.map((lookup) => lookup.id).join(', ')}: ${error.message}`
       );
       return new Map();
     }
-
-    const payload = await response.json();
-    const results = new Map();
-
-    for (const item of payload) {
-      const matchingLookup = lookups.find(
-        (lookup) =>
-          lookup.id === item.id &&
-          CATEGORY_BY_KIND[lookup.kind] === item.category
-      );
-
-      if (!matchingLookup || !item.name) {
-        continue;
-      }
-
-      results.set(cacheKey(matchingLookup.kind, matchingLookup.id), item.name);
-    }
-
-    return results;
   }
 }
 

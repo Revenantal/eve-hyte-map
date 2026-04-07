@@ -28,7 +28,7 @@ Default settings live in `config/default.json`. Optional overrides can come from
 - `config/local.json`
 - `config.local.json`
 - `EVE_KILLMAP_CONFIG=/path/to/custom.json`
-- environment variables such as `PORT`, `R2Z2_USER_AGENT`, `R2Z2_BASE_URL`, `R2Z2_SEQUENCE_URL`, `R2Z2_SEQUENCE_FILE`, `R2Z2_REQUEST_DELAY_MS`, `R2Z2_EMPTY_DELAY_MS`, `R2Z2_RETRY_MS`, `R2Z2_TIMEOUT_MS`, `R2Z2_HEADERS_JSON`, `DISPLAY_ASPECT_RATIO`, `DISPLAY_WIDTH_PX`, `DISPLAY_MAX_RECENT_KILLS`, `DISPLAY_ACTIVITY_WINDOW_MS`, `DISPLAY_PULSE_DURATION_MS`, `MAP_SYSTEMS_PATH`, `MAP_EDGES_PATH`, `MAP_REGIONS_PATH`, and `HEATMAP_TIERS_JSON`
+- environment variables such as `PORT`, `R2Z2_USER_AGENT`, `R2Z2_BASE_URL`, `R2Z2_SEQUENCE_URL`, `R2Z2_SEQUENCE_FILE`, `R2Z2_REQUEST_DELAY_MS`, `R2Z2_EMPTY_DELAY_MS`, `R2Z2_RETRY_MS`, `R2Z2_TIMEOUT_MS`, `R2Z2_MAX_CONSECUTIVE_MISSING_BEFORE_SKIP`, `R2Z2_MAX_CONSECUTIVE_RETRY_BEFORE_SKIP`, `R2Z2_HEADERS_JSON`, `DISPLAY_ASPECT_RATIO`, `DISPLAY_WIDTH_PX`, `DISPLAY_MAX_RECENT_KILLS`, `DISPLAY_ACTIVITY_WINDOW_MS`, `DISPLAY_PULSE_DURATION_MS`, `MAP_SYSTEMS_PATH`, `MAP_EDGES_PATH`, `MAP_REGIONS_PATH`, and `HEATMAP_TIERS_JSON`
 
 The app fails fast if `r2z2.userAgent` resolves to an empty string.
 
@@ -55,7 +55,7 @@ npm run generate:map
 
 - `GET /api/bootstrap` returns initial config, map, and in-memory state.
 - `GET /events` streams `kill` SSE events.
-- `GET /health` returns liveness plus current sequence and SSE client count.
+- `GET /health` returns liveness plus current sequence, SSE client count, and ingest diagnostics such as the target sequence, last processed sequence, retry counters, and the last skip/error details.
 
 ## Testing
 
