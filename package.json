@@ -2,9 +2,9 @@
   "name": "eve-hyte-map",
   "version": "1.0.0",
   "description": "Single-app EVE Online kill activity display powered by zKillboard R2Z2.",
-  "main": "src/server/index.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node src/server/index.js",
+    "start": "node app.js",
     "dev": "node --watch --watch-preserve-output --watch-path=src --watch-path=config --watch-path=data src/server/index.js --dev-live-reload",
     "test": "node --test",
     "generate:map": "node scripts/generate-map-data.mjs"
