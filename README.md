@@ -46,7 +46,7 @@ tar -xf sde.zip -C sde-extract mapSolarSystems.jsonl mapStargates.jsonl mapRegio
 npm run generate:map
 ```
 
-`r2z2-sequence.json` is created and updated automatically at runtime.
+`runtime/r2z2-sequence.json` is created and updated automatically at runtime.
 
 ## API
 

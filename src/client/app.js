@@ -37,7 +37,6 @@ async function boot() {
   updateStatusText();
   renderFrame();
   scheduleNextExpiry();
-  connectDevReload();
   connectEvents();
 }
 
@@ -206,33 +205,6 @@ async function waitForFonts() {
     document.fonts.load('400 12px "Eve Sans Neue Condensed"'),
     document.fonts.load('700 12px "Eve Sans Neue Condensed"')
   ]);
-}
-
-function connectDevReload() {
-  if (!renderConfig?.devLiveReload) {
-    return;
-  }
-
-  const source = new EventSource('/__dev/reload');
-  let openedOnce = false;
-  let shouldReloadOnReconnect = false;
-
-  source.addEventListener('open', () => {
-    if (openedOnce && shouldReloadOnReconnect) {
-      source.close();
-      window.location.reload();
-      return;
-    }
-
-    openedOnce = true;
-    shouldReloadOnReconnect = false;
-  });
-
-  source.addEventListener('error', () => {
-    if (openedOnce) {
-      shouldReloadOnReconnect = true;
-    }
-  });
 }
 
 function syncRendererSize() {

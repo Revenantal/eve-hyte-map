@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "node --watch --watch-preserve-output --watch-path=src --watch-path=config --watch-path=data src/server/index.js --dev-live-reload",
+    "dev": "node --watch --watch-preserve-output --watch-path=src --watch-path=config --watch-path=data/systems.json --watch-path=data/edges.json --watch-path=data/regions.json src/server/index.js",
     "test": "node --test",
     "generate:map": "node scripts/generate-map-data.mjs"
   },

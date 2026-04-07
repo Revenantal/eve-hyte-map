@@ -9,4 +9,7 @@ sde-extract/
 config/local.json
 config/config.local.json
 config.local.json
+runtime/
 data/r2z2-sequence.json
+.err
+.out

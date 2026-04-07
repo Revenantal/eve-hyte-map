@@ -1,7 +1,7 @@
 import express from 'express';
 import path from 'node:path';
 
-export function createApp({ config, mapData, state, sseHub, devLiveReload = false }) {
+export function createApp({ config, mapData, state, sseHub }) {
   const app = express();
   const clientRoot = path.resolve(process.cwd(), 'src', 'client');
 
@@ -20,8 +20,7 @@ export function createApp({ config, mapData, state, sseHub, devLiveReload = fals
         activityWindowMs: config.display.activityWindowMs,
         pulseDurationMs: config.display.pulseDurationMs,
         maxRecentKills: config.display.maxRecentKills,
-        heatmapTiers: config.heatmap.tiers,
-        devLiveReload
+        heatmapTiers: config.heatmap.tiers
       },
       map: {
         systems: mapData.systems,
@@ -50,27 +49,6 @@ export function createApp({ config, mapData, state, sseHub, devLiveReload = fals
       sseClients: sseHub.getClientCount()
     });
   });
-
-  if (devLiveReload) {
-    app.get('/__dev/reload', (_request, response) => {
-      response.writeHead(200, {
-        'Content-Type': 'text/event-stream',
-        'Cache-Control': 'no-cache, no-transform',
-        Connection: 'keep-alive',
-        'X-Accel-Buffering': 'no'
-      });
-      response.write('retry: 300\n\n');
-
-      const heartbeat = setInterval(() => {
-        response.write(': heartbeat\n\n');
-      }, 15000);
-      heartbeat.unref?.();
-
-      response.on('close', () => {
-        clearInterval(heartbeat);
-      });
-    });
-  }
 
   return app;
 }

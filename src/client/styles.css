@@ -6,6 +6,9 @@
   --muted: #9aaebb;
   --accent: #72ddff;
   --shadow: 0 28px 64px rgba(0, 0, 0, 0.38);
+  --font-size-standard: 1.75rem;
+  --font-size-kill: calc(var(--font-size-standard) * 1.05);
+  --kill-column-gap: 12px;
 }
 
 @font-face {
@@ -88,10 +91,10 @@ body {
   display: grid;
   gap: 2px;
   text-align: right;
-  font-size: 0.72rem;
+  font-size: var(--font-size-standard);
   line-height: 1.15;
   letter-spacing: 0.04em;
-  color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
   font-family: "Eve Sans Neue Condensed", "Eve Sans Neue", Bahnschrift, sans-serif;
 }
 
@@ -121,11 +124,11 @@ body {
 
 .kill-row {
   display: grid;
-  grid-template-columns: 58px 40px minmax(220px, 1.7fr) 40px minmax(210px, 1.45fr) minmax(140px, 1.05fr);
-  gap: 8px;
+  grid-template-columns: 86px 52px minmax(0, 1.08fr) 52px minmax(0, 0.92fr) minmax(0, 0.68fr);
+  column-gap: var(--kill-column-gap);
+  row-gap: 8px;
   align-items: center;
-  min-height: 48px;
-  padding: 2px 10px;
+  padding: 8px 11px;
   border-radius: 0;
   border: 0;
   background: transparent;
@@ -133,31 +136,35 @@ body {
 
 .kill-rail {
   display: grid;
-  gap: 1px;
+  gap: 0;
   align-content: center;
+  justify-items: end;
   text-align: right;
-  padding-right: 2px;
 }
 
 .kill-time {
-  font-size: 0.86rem;
+  font-size: var(--font-size-kill);
   color: rgba(255, 255, 255, 0.95);
+  line-height: 1;
+  letter-spacing: 0.01em;
   font-family: "Eve Sans Neue Condensed", "Eve Sans Neue", sans-serif;
 }
 
 .kill-value {
-  font-size: 0.86rem;
+  font-size: var(--font-size-kill);
   color: #3fb6ff;
+  line-height: 1;
+  letter-spacing: 0.01em;
   font-family: "Eve Sans Neue Condensed", "Eve Sans Neue", sans-serif;
 }
 
 .kill-ship,
 .kill-alliance {
-  width: 42px;
-  height: 42px;
+  width: 52px;
+  height: 52px;
   overflow: hidden;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: transparent;
+  border: 0;
 }
 
 .kill-ship-image,
@@ -172,7 +179,7 @@ body {
   display: grid;
   place-items: center;
   color: rgba(255, 255, 255, 0.9);
-  font-size: 0.72rem;
+  font-size: var(--font-size-kill);
   letter-spacing: 0.08em;
   font-family: "Eve Sans Neue Condensed", "Eve Sans Neue", sans-serif;
 }
@@ -181,6 +188,7 @@ body {
   min-width: 0;
   display: grid;
   gap: 1px;
+  overflow: hidden;
 }
 
 .kill-primary,
@@ -188,17 +196,18 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-family: "Eve Sans Neue Condensed", "Eve Sans Neue", sans-serif;
 }
 
 .kill-primary {
   color: #3fb6ff;
-  font-size: 0.82rem;
+  font-size: var(--font-size-kill);
   line-height: 1.05;
 }
 
 .kill-secondary {
   color: rgba(220, 232, 242, 0.92);
-  font-size: 0.79rem;
+  font-size: var(--font-size-kill);
   line-height: 1.05;
 }
 
@@ -211,9 +220,11 @@ body {
   padding: 20px;
   text-align: center;
   color: var(--muted);
+  font-size: var(--font-size-kill);
   border: 0;
   border-radius: 0;
   background: transparent;
+  font-family: "Eve Sans Neue Condensed", "Eve Sans Neue", sans-serif;
 }
 
 @media (max-width: 900px) {
@@ -223,12 +234,14 @@ body {
   }
 
   .kill-row {
-    grid-template-columns: 54px 38px minmax(0, 1.15fr) 38px;
+    grid-template-columns: 72px 48px minmax(0, 1fr) 48px;
     grid-template-areas:
       "rail ship victim alliance"
       "rail ship meta location";
-    gap: 4px 8px;
-    padding: 4px 8px;
+    row-gap: 6px;
+    column-gap: var(--kill-column-gap);
+    min-height: 150px;
+    padding: 9px 9px;
   }
 
   .kill-rail {
@@ -237,14 +250,14 @@ body {
 
   .kill-ship {
     grid-area: ship;
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
   }
 
   .kill-alliance {
     grid-area: alliance;
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
     justify-self: end;
   }
 

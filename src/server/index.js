@@ -6,13 +6,12 @@ import { createR2Z2Ingestor } from './r2z2.js';
 import { createApp } from './app.js';
 
 async function main() {
-  const devLiveReload = process.argv.includes('--dev-live-reload');
   const config = await loadConfig();
   const mapData = await loadMapData(config);
   const state = createRuntimeState(config);
   const sseHub = createSseHub();
   const ingestor = createR2Z2Ingestor({ config, state, sseHub, mapData });
-  const app = createApp({ config, mapData, state, sseHub, devLiveReload });
+  const app = createApp({ config, mapData, state, sseHub });
 
   const server = app.listen(config.server.port, () => {
     console.log(`eve-hyte-map listening on http://localhost:${config.server.port}`);
