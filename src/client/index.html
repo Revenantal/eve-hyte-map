@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EVE Killmap Display</title>
+    <link rel="preload" href="/fonts/evesansneue-regular.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="/fonts/evesansneue-bold.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="/fonts/evesansneue-condensed.otf" as="font" type="font/otf" crossorigin>
+    <link rel="preload" href="/fonts/evesansneue-condensedbold.otf" as="font" type="font/otf" crossorigin>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="display-shell">
+      <section class="map-panel">
+        <div class="status-overlay" id="status-overlay" aria-live="polite">
+          <div class="status-line" id="connection-label">[Connecting]</div>
+          <div class="status-line" id="kill-count-label">0 kills past hour</div>
+        </div>
+        <canvas id="map-canvas" aria-label="EVE universe kill activity map"></canvas>
+      </section>
+      <section class="kills-panel">
+        <ol id="kills-list" class="kills-list"></ol>
+      </section>
+    </main>
+    <script type="module" src="/app.js"></script>
+  </body>
+  </html>

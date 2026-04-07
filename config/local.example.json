@@ -1,0 +1,8 @@
+{
+  "server": {
+    "port": 3000
+  },
+  "r2z2": {
+    "userAgent": "eve-killmap/1.0 (replace-me@example.com)"
+  }
+}

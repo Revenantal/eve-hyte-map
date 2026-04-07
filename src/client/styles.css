@@ -1,0 +1,269 @@
+:root {
+  color-scheme: dark;
+  --bg: #061018;
+  --panel-border: rgba(131, 198, 255, 0.16);
+  --text: #f4f6f8;
+  --muted: #9aaebb;
+  --accent: #72ddff;
+  --shadow: 0 28px 64px rgba(0, 0, 0, 0.38);
+}
+
+@font-face {
+  font-family: "Eve Sans Neue";
+  src: url("/fonts/evesansneue-regular.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Eve Sans Neue";
+  src: url("/fonts/evesansneue-bold.otf") format("opentype");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Eve Sans Neue Condensed";
+  src: url("/fonts/evesansneue-condensed.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Eve Sans Neue Condensed";
+  src: url("/fonts/evesansneue-condensedbold.otf") format("opentype");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: #000000;
+  color: var(--text);
+  font-family: "Eve Sans Neue", "Eve Sans", Bahnschrift, "Aptos", "Segoe UI Variable", "Segoe UI", sans-serif;
+}
+
+body {
+  padding: 0;
+}
+
+.display-shell {
+  width: min(100vw, var(--display-width, 1000px));
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: 1.55fr 0.72fr;
+  gap: 0;
+  margin: 0 auto;
+}
+
+.map-panel,
+.kills-panel {
+  position: relative;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  overflow: hidden;
+}
+
+.map-panel::before,
+.kills-panel::before {
+  content: none;
+}
+
+.status-overlay {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  z-index: 2;
+  display: grid;
+  gap: 2px;
+  text-align: right;
+  font-size: 0.72rem;
+  line-height: 1.15;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.25);
+  font-family: "Eve Sans Neue Condensed", "Eve Sans Neue", Bahnschrift, sans-serif;
+}
+
+.status-line {
+  white-space: nowrap;
+}
+
+#map-canvas {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.kills-list {
+  position: relative;
+  z-index: 1;
+  list-style: none;
+  margin: 0;
+  padding: 2px 0 4px;
+  display: grid;
+  gap: 1px;
+}
+
+.kill-row {
+  display: grid;
+  grid-template-columns: 58px 40px minmax(220px, 1.7fr) 40px minmax(210px, 1.45fr) minmax(140px, 1.05fr);
+  gap: 8px;
+  align-items: center;
+  min-height: 48px;
+  padding: 2px 10px;
+  border-radius: 0;
+  border: 0;
+  background: transparent;
+}
+
+.kill-rail {
+  display: grid;
+  gap: 1px;
+  align-content: center;
+  text-align: right;
+  padding-right: 2px;
+}
+
+.kill-time {
+  font-size: 0.86rem;
+  color: rgba(255, 255, 255, 0.95);
+  font-family: "Eve Sans Neue Condensed", "Eve Sans Neue", sans-serif;
+}
+
+.kill-value {
+  font-size: 0.86rem;
+  color: #3fb6ff;
+  font-family: "Eve Sans Neue Condensed", "Eve Sans Neue", sans-serif;
+}
+
+.kill-ship,
+.kill-alliance {
+  width: 42px;
+  height: 42px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.kill-ship-image,
+.kill-alliance-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.kill-thumb-fallback {
+  display: grid;
+  place-items: center;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  font-family: "Eve Sans Neue Condensed", "Eve Sans Neue", sans-serif;
+}
+
+.kill-block {
+  min-width: 0;
+  display: grid;
+  gap: 1px;
+}
+
+.kill-primary,
+.kill-secondary {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.kill-primary {
+  color: #3fb6ff;
+  font-size: 0.82rem;
+  line-height: 1.05;
+}
+
+.kill-secondary {
+  color: rgba(220, 232, 242, 0.92);
+  font-size: 0.79rem;
+  line-height: 1.05;
+}
+
+.kill-location-block .kill-secondary,
+.kill-meta-block .kill-secondary {
+  color: rgba(197, 214, 229, 0.82);
+}
+
+.kill-empty {
+  padding: 20px;
+  text-align: center;
+  color: var(--muted);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+@media (max-width: 900px) {
+  .display-shell {
+    width: 100%;
+    min-height: 100vh;
+  }
+
+  .kill-row {
+    grid-template-columns: 54px 38px minmax(0, 1.15fr) 38px;
+    grid-template-areas:
+      "rail ship victim alliance"
+      "rail ship meta location";
+    gap: 4px 8px;
+    padding: 4px 8px;
+  }
+
+  .kill-rail {
+    grid-area: rail;
+  }
+
+  .kill-ship {
+    grid-area: ship;
+    width: 40px;
+    height: 40px;
+  }
+
+  .kill-alliance {
+    grid-area: alliance;
+    width: 40px;
+    height: 40px;
+    justify-self: end;
+  }
+
+  .kill-victim-block {
+    grid-area: victim;
+  }
+
+  .kill-meta-block {
+    grid-area: meta;
+    justify-self: end;
+    text-align: right;
+  }
+
+  .kill-location-block {
+    grid-area: location;
+  }
+
+  .kill-meta-block .kill-primary,
+  .kill-meta-block .kill-secondary {
+    text-align: right;
+  }
+}

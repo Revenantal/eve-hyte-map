@@ -1,0 +1,53 @@
+{
+  "server": {
+    "port": 3000
+  },
+  "r2z2": {
+    "baseUrl": "https://r2z2.zkillboard.com/ephemeral",
+    "sequenceUrl": "https://r2z2.zkillboard.com/ephemeral/sequence.json",
+    "requestDelayMs": 100,
+    "emptyDelayMs": 6000,
+    "retryMs": 2000,
+    "timeoutMs": 15000,
+    "userAgent": "eve-killmap/1.0",
+    "headers": {},
+    "sequenceFile": "./data/r2z2-sequence.json",
+    "startMode": "resume_or_latest"
+  },
+  "display": {
+    "aspectRatio": "1:2",
+    "widthPx": 1000,
+    "maxRecentKills": 5,
+    "activityWindowMs": 3600000,
+    "pulseDurationMs": 1500
+  },
+  "map": {
+    "systemsPath": "./data/systems.json",
+    "edgesPath": "./data/edges.json",
+    "regionsPath": "./data/regions.json"
+  },
+  "heatmap": {
+    "tiers": [
+      {
+        "min": 1,
+        "radius": 6,
+        "alpha": 0.18
+      },
+      {
+        "min": 2,
+        "radius": 9,
+        "alpha": 0.28
+      },
+      {
+        "min": 4,
+        "radius": 12,
+        "alpha": 0.38
+      },
+      {
+        "min": 7,
+        "radius": 16,
+        "alpha": 0.5
+      }
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+node_modules/
+.DS_Store
+Thumbs.db
+.env
+.tmp/
+tmp/
+sde.zip
+sde-extract/
+config/local.json
+config/config.local.json
+config.local.json
+data/r2z2-sequence.json
